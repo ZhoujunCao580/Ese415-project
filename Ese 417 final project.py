@@ -279,18 +279,16 @@ if __name__ == "__main__":
     y = df['quality_label']  # 分类目标
     # 拆分训练集和测试集
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-    # X_train, y_train = balance_classes_upsampling(X_train, y_train, target_column='quality_label')
-    # X_train, y_train = smote(X_train, y_train, target_class='high', n_neighbors=5, n_samples=1102)
-    # X_train, y_train = smote(X_train, y_train, target_class='low', n_neighbors=5, n_samples=1256)
-    # best_rf_model, rf_report, selected_features = random_forest(
-    #     X_train, y_train, X_test, y_test, importance_threshold=0.01
-    # )
-    # print("Selected Features:")
-    # print(selected_features)
-    # print(rf_report)
-    # best_knn_model, knn_report = KNN(X_train, y_train, X_test, y_test)
-    # best_svm_model, svm_report = SVM(X_train, y_train, X_test, y_test)
+    X_train, y_train = balance_classes_upsampling(X_train, y_train, target_column='quality_label')
+    X_train, y_train = smote(X_train, y_train, target_class='high', n_neighbors=5, n_samples=1102)
+    X_train, y_train = smote(X_train, y_train, target_class='low', n_neighbors=5, n_samples=1256)
+    best_rf_model, rf_report, selected_features = random_forest(
+        X_train, y_train, X_test, y_test, importance_threshold=0.01
+    )
+    print("Selected Features:")
+    print(selected_features)
+    print(rf_report)
     gbc_classification(X_train, y_train, X_test, y_test)
-    # gpc_model, gpc_report = gpc_classification(X_train, y_train, X_test, y_test)
-    # nb_model, nb_report = nb_classification(X_train, y_train, X_test, y_test)
-    #ann_model, ann_report = ann_classification(X_train, y_train, X_test, y_test)
+    gpc_model, gpc_report = gpc_classification(X_train, y_train, X_test, y_test)
+    nb_model, nb_report = nb_classification(X_train, y_train, X_test, y_test)
+    ann_model, ann_report = ann_classification(X_train, y_train, X_test, y_test)
